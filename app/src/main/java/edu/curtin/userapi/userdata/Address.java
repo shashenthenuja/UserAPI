@@ -1,4 +1,4 @@
-package edu.curtin.userapi;
+package edu.curtin.userapi.userdata;
 
 public class Address {
     private String street;

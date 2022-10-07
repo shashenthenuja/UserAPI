@@ -1,4 +1,4 @@
-package edu.curtin.userapi;
+package edu.curtin.userapi.userdata;
 
 public class Company {
     private String name;
