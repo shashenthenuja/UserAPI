@@ -3,6 +3,7 @@ package edu.curtin.userapi;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,33 +24,43 @@ import java.util.concurrent.TimeoutException;
 import edu.curtin.userapi.userdata.Address;
 import edu.curtin.userapi.userdata.Company;
 import edu.curtin.userapi.userdata.Geo;
+import edu.curtin.userapi.userdata.Post;
 import edu.curtin.userapi.userdata.User;
 
 public class TaskHandler implements Runnable{
 
     Activity uiActivity;
     Context context;
+    ProgressBar progressBar;
     ArrayList<User> user = new ArrayList<>();
+    ArrayList<Post> posts = new ArrayList<>();
 
-    public TaskHandler(Activity uiActivity, Context context) {
+    public TaskHandler(Activity uiActivity, Context context, ProgressBar progressBar) {
         this.uiActivity = uiActivity;
         this.context = context;
+        this.progressBar = progressBar;
     }
 
     @Override
     public void run() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-        UserAPIData searchTask = new UserAPIData(uiActivity);
-        Future<String> searchResponsePlaceholder = executorService.submit(searchTask);
+        UserAPIData userData = new UserAPIData(uiActivity);
+        Future<String> searchResponsePlaceholder = executorService.submit(userData);
         String searchResult = waitingForSearch(searchResponsePlaceholder);
         user = getEndpoint(searchResult);
+
+        PostsAPIData postData = new PostsAPIData(uiActivity);
+        Future<String> searchResponsePlaceholder2 = executorService.submit(postData);
+        String searchResult2 = waitingForSearch(searchResponsePlaceholder2);
+        posts = getPostEndPoint(searchResult2);
+
         if (user.size() > 0 ) {
             uiActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     RecyclerView rv= uiActivity.findViewById(R.id.recView);
                     rv.setLayoutManager(new LinearLayoutManager(uiActivity));
-                    DataAdapter adapter = new DataAdapter(user, uiActivity);
+                    DataAdapter adapter = new DataAdapter(user, posts, uiActivity);
                     rv.setAdapter(adapter);
                 }
             });
@@ -91,11 +102,32 @@ public class TaskHandler implements Runnable{
         return users;
     }
 
+    private ArrayList<Post> getPostEndPoint(String data){
+        ArrayList<Post> posts = new ArrayList<>();
+        try {
+            JSONArray json = new JSONArray(data);
+            System.out.println(json.length());
+            if(json.length()>0){
+                for (int i = 0; i < json.length(); i++) {
+                    JSONObject object = json.getJSONObject(i);
+                    int userId = object.getInt("userId");
+                    int id = object.getInt("id");
+                    String title = object.getString("title");
+                    String body = object.getString("body");
+                    posts.add(new Post(userId, id, title, body));
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return posts;
+    }
+
     public String waitingForSearch(Future<String> searchResponsePlaceholder){
         uiActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
+                progressBar.setVisibility(View.VISIBLE);
             }
         });
         showToast("Search Starts");
@@ -116,7 +148,7 @@ public class TaskHandler implements Runnable{
         uiActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
         return  searchResponseData;
@@ -144,9 +176,5 @@ public class TaskHandler implements Runnable{
                 Toast.makeText(uiActivity,text,Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public ArrayList<User> getUser() {
-        return user;
     }
 }

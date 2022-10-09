@@ -2,12 +2,16 @@ package edu.curtin.userapi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import edu.curtin.userapi.userdata.Post;
 import edu.curtin.userapi.userdata.User;
 
 public class UserDetails extends AppCompatActivity {
@@ -27,7 +31,7 @@ public class UserDetails extends AppCompatActivity {
     TextView compName;
     TextView cp;
     TextView bs;
-    Button posts;
+    Button postBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +52,10 @@ public class UserDetails extends AppCompatActivity {
         compName = findViewById(R.id.userCompName);
         cp = findViewById(R.id.userCompCp);
         bs = findViewById(R.id.userCompBs);
-        posts = findViewById(R.id.userPosts);
+        postBtn = findViewById(R.id.userPosts);
 
         ArrayList<User> users = (ArrayList<User>) getIntent().getSerializableExtra("list");
+        ArrayList<Post> posts = (ArrayList<Post>) getIntent().getSerializableExtra("posts");
         int idVal = getIntent().getIntExtra("id", 0);
 
         if (users.size() > 0) {
@@ -76,5 +81,28 @@ public class UserDetails extends AppCompatActivity {
                 }
             }
         }
+
+        postBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<Post> userPosts = new ArrayList<>();
+                if (posts.size() > 0) {
+                    for (Post p:posts
+                         ) {
+                        if (p.getUserId() == idVal) {
+                            userPosts.add(p);
+                        }
+                    }
+                }
+                if (userPosts.size() > 0) {
+                    Intent intent = new Intent(UserDetails.this, UserPosts.class);
+                    intent.putExtra("posts", userPosts);
+                    UserDetails.this.startActivity(intent);
+                }else{
+                    Toast.makeText(UserDetails.this, "No Posts From Current User!" , Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 }

@@ -5,7 +5,9 @@
       <map>
         <entry key="..\:/My Files/Android Studio Projects/COMP2008/Assignments/Assignment 02/Part 01/UserAPI/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/My Files/Android Studio Projects/COMP2008/Assignments/Assignment 02/Part 01/UserAPI/app/src/main/res/layout/activity_user_details.xml" value="0.33" />
+        <entry key="..\:/My Files/Android Studio Projects/COMP2008/Assignments/Assignment 02/Part 01/UserAPI/app/src/main/res/layout/activity_user_posts.xml" value="0.2604166666666667" />
         <entry key="..\:/My Files/Android Studio Projects/COMP2008/Assignments/Assignment 02/Part 01/UserAPI/app/src/main/res/layout/list_layout.xml" value="0.33" />
+        <entry key="..\:/My Files/Android Studio Projects/COMP2008/Assignments/Assignment 02/Part 01/UserAPI/app/src/main/res/layout/posts_layout.xml" value="0.2604166666666667" />
       </map>
     </option>
   </component>

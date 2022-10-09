@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,12 +18,15 @@ import edu.curtin.userapi.userdata.User;
 public class MainActivity extends AppCompatActivity {
 
     ExecutorService executorService = Executors.newSingleThreadExecutor();
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        progressBar = findViewById(R.id.progressBarId);
+        progressBar.setVisibility(View.INVISIBLE);
 
-        TaskHandler taskHandler = new TaskHandler(MainActivity.this, this);
+        TaskHandler taskHandler = new TaskHandler(MainActivity.this, this, progressBar);
         executorService.execute(taskHandler);
     }
 }

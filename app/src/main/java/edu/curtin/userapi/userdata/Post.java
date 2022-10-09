@@ -8,9 +8,11 @@ public class Post implements Serializable {
     private String title;
     private String body;
 
-    public Post(int userId, int id) {
+    public Post(int userId, int id, String title, String body) {
         this.userId = userId;
         this.id = id;
+        this.title = title;
+        this.body = body;
     }
 
     public int getUserId() {
@@ -25,15 +27,8 @@ public class Post implements Serializable {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
 }
