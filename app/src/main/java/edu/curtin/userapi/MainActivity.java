@@ -1,19 +1,15 @@
 package edu.curtin.userapi;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import edu.curtin.userapi.userdata.User;
+import edu.curtin.userapi.api.TaskHandler;
 
 public class MainActivity extends AppCompatActivity {
 

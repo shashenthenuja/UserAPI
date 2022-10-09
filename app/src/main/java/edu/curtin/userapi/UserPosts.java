@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
+import edu.curtin.userapi.helpers.PostAdapter;
 import edu.curtin.userapi.userdata.Post;
 
 public class UserPosts extends AppCompatActivity {

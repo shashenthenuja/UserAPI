@@ -1,4 +1,4 @@
-package edu.curtin.userapi;
+package edu.curtin.userapi.helpers;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import edu.curtin.userapi.R;
+import edu.curtin.userapi.UserDetails;
 import edu.curtin.userapi.userdata.Post;
 import edu.curtin.userapi.userdata.User;
 

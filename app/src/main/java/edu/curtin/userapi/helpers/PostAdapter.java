@@ -1,4 +1,4 @@
-package edu.curtin.userapi;
+package edu.curtin.userapi.helpers;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import edu.curtin.userapi.R;
 import edu.curtin.userapi.userdata.Post;
 
 public class PostAdapter extends RecyclerView.Adapter<PostViewHolder>{

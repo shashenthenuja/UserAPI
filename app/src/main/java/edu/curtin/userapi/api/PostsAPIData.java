@@ -1,17 +1,17 @@
-package edu.curtin.userapi;
+package edu.curtin.userapi.api;
 
 import android.app.Activity;
 
 import java.net.HttpURLConnection;
 import java.util.concurrent.Callable;
 
-public class UserAPIData implements Callable<String> {
+public class PostsAPIData implements Callable<String> {
 
     private RemoteUtils remoteUtils;
-    private String userUrl = "https://jsonplaceholder.typicode.com/users";
+    private String userUrl = "https://jsonplaceholder.typicode.com/posts";
     private Activity uiActivity;
 
-    public UserAPIData(Activity uiActivity) {
+    public PostsAPIData(Activity uiActivity) {
         this.uiActivity = uiActivity;
         remoteUtils = RemoteUtils.getInstance(uiActivity);
     }
@@ -35,5 +35,4 @@ public class UserAPIData implements Callable<String> {
         }
         return response;
     }
-
 }

@@ -1,4 +1,4 @@
-package edu.curtin.userapi;
+package edu.curtin.userapi.api;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,6 +21,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import edu.curtin.userapi.R;
+import edu.curtin.userapi.helpers.DataAdapter;
 import edu.curtin.userapi.userdata.Address;
 import edu.curtin.userapi.userdata.Company;
 import edu.curtin.userapi.userdata.Geo;
@@ -35,6 +37,8 @@ public class TaskHandler implements Runnable{
     ArrayList<User> user = new ArrayList<>();
     ArrayList<Post> posts = new ArrayList<>();
 
+    // Implemented from Lecture 9 sample codes
+    // Lecture 09 | Android-Executor-Network-Call/BackgroundTaskHandler.java
     public TaskHandler(Activity uiActivity, Context context, ProgressBar progressBar) {
         this.uiActivity = uiActivity;
         this.context = context;
@@ -45,13 +49,13 @@ public class TaskHandler implements Runnable{
     public void run() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         UserAPIData userData = new UserAPIData(uiActivity);
-        Future<String> searchResponsePlaceholder = executorService.submit(userData);
-        String searchResult = waitingForSearch(searchResponsePlaceholder);
+        Future<String> userDataResponse = executorService.submit(userData);
+        String searchResult = waitingForData(userDataResponse);
         user = getEndpoint(searchResult);
 
         PostsAPIData postData = new PostsAPIData(uiActivity);
-        Future<String> searchResponsePlaceholder2 = executorService.submit(postData);
-        String searchResult2 = waitingForSearch(searchResponsePlaceholder2);
+        Future<String> postsResponse = executorService.submit(postData);
+        String searchResult2 = waitingForPosts(postsResponse);
         posts = getPostEndPoint(searchResult2);
 
         if (user.size() > 0 ) {
@@ -123,28 +127,59 @@ public class TaskHandler implements Runnable{
         return posts;
     }
 
-    public String waitingForSearch(Future<String> searchResponsePlaceholder){
+    public String waitingForData(Future<String> searchResponsePlaceholder){
         uiActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 progressBar.setVisibility(View.VISIBLE);
             }
         });
-        showToast("Search Starts");
+        showToast("Retrieving User Data");
         String searchResponseData =null;
         try {
             searchResponseData = searchResponsePlaceholder.get(6000, TimeUnit.MILLISECONDS);
         } catch (ExecutionException e) {
             e.printStackTrace();
-            showError(1, "Search");
+            showError(1, "User Data");
         } catch (InterruptedException e) {
             e.printStackTrace();
-            showError(2, "Search");
+            showError(2, "User Data");
         } catch (TimeoutException e) {
             e.printStackTrace();
-            showError(3, "Search");
+            showError(3, "User Data");
         }
-        showToast("Search Ends");
+        showToast("User Data Retrieved");
+        uiActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
+        return  searchResponseData;
+    }
+
+    public String waitingForPosts(Future<String> searchResponsePlaceholder){
+        uiActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
+        showToast("Retrieving Posts");
+        String searchResponseData =null;
+        try {
+            searchResponseData = searchResponsePlaceholder.get(6000, TimeUnit.MILLISECONDS);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            showError(1, "Post");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            showError(2, "Post");
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+            showError(3, "Post");
+        }
+        showToast("Posts Retrieved");
         uiActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {

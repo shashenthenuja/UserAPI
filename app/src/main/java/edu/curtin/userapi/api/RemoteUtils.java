@@ -1,4 +1,4 @@
-package edu.curtin.userapi;
+package edu.curtin.userapi.api;
 
 import android.app.Activity;
 import android.widget.Toast;
@@ -12,8 +12,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-    // Implemented from Lecture 8 sample codes
-    // Lecture 08 | Android-Executor-Network-Call/RemoteUtilities.java
+    // Implemented from Lecture 9 sample codes
+    // Lecture 09 | Android-Executor-Network-Call/RemoteUtilities.java
     public class RemoteUtils {
         public static RemoteUtils remoteUtils = null;
         private Activity uiActivity;
