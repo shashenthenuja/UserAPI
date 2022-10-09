@@ -1,5 +1,7 @@
 package edu.curtin.userapi;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +16,11 @@ import edu.curtin.userapi.userdata.User;
 public class DataAdapter extends RecyclerView.Adapter<DataViewHolder> {
 
     ArrayList<User> users = new ArrayList<>();
+    Activity uiActivity;
 
-    public DataAdapter(ArrayList<User> users) {
+    public DataAdapter(ArrayList<User> users, Activity uiActivity) {
         this.users = users;
+        this.uiActivity = uiActivity;
     }
 
     @NonNull
@@ -25,6 +29,15 @@ public class DataAdapter extends RecyclerView.Adapter<DataViewHolder> {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.list_layout,parent,false);
         DataViewHolder myDataVHolder = new DataViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(uiActivity, UserDetails.class);
+                intent.putExtra("list", users);
+                intent.putExtra("id", Integer.parseInt(myDataVHolder.id.getText().toString()));
+                uiActivity.startActivity(intent);
+            }
+        });
         return myDataVHolder;
     }
 

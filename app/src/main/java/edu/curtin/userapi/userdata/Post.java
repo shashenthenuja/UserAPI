@@ -1,6 +1,8 @@
 package edu.curtin.userapi.userdata;
 
-public class Post {
+import java.io.Serializable;
+
+public class Post implements Serializable {
     private int userId;
     private int id;
     private String title;

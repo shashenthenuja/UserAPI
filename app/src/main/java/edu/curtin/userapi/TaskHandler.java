@@ -49,7 +49,7 @@ public class TaskHandler implements Runnable{
                 public void run() {
                     RecyclerView rv= uiActivity.findViewById(R.id.recView);
                     rv.setLayoutManager(new LinearLayoutManager(uiActivity));
-                    DataAdapter adapter = new DataAdapter(user);
+                    DataAdapter adapter = new DataAdapter(user, uiActivity);
                     rv.setAdapter(adapter);
                 }
             });

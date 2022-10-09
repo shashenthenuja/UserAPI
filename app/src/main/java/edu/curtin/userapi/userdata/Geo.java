@@ -1,6 +1,8 @@
 package edu.curtin.userapi.userdata;
 
-public class Geo {
+import java.io.Serializable;
+
+public class Geo implements Serializable  {
     private double latitude;
     private double longitude;
 
