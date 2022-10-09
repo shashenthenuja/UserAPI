@@ -6,11 +6,11 @@ public class User {
     private String username;
     private String email;
     private Address address;
-    private int phone;
+    private String phone;
     private String website;
     private Company company;
 
-    public User(int id, String name, String username, String email, Address address, int phone, String website, Company company) {
+    public User(int id, String name, String username, String email, Address address, String phone, String website, Company company) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -41,7 +41,7 @@ public class User {
         return address;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
